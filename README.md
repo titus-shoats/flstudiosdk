@@ -2,6 +2,8 @@
 
 This repository contains the FL Studio SDK documentation and examples for creating native FL Studio plugins.
 
+![Hello World Plugin Preview](https://github.com/user-attachments/assets/7fcafc23-0f34-4300-b4bd-7b934afeb0d3)
+
 ## Contents
 
 - **HTML Documentation**: Complete API reference for the FL Studio plugin SDK

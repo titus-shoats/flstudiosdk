@@ -2,6 +2,8 @@
 
 This is a simple "Hello World" native FL Studio plugin that demonstrates how to use the FL Studio SDK with JUCE for the GUI.
 
+![Plugin Preview](https://github.com/user-attachments/assets/7fcafc23-0f34-4300-b4bd-7b934afeb0d3)
+
 ## Overview
 
 This plugin combines:
