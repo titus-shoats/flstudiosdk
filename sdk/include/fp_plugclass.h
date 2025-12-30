@@ -36,10 +36,9 @@
 
 // Forward declarations
 struct TFruityPlugHost;
-struct TFruityPlugInfo;
 
 // TFruityPlugInfo structure
-typedef struct {
+typedef struct TFruityPlugInfo {
     int SDKVersion;
     char *LongName;
     char *ShortName;

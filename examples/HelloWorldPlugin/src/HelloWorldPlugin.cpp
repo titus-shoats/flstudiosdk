@@ -1,5 +1,6 @@
 #include "HelloWorldPlugin.h"
 #include <juce_events/juce_events.h>
+#include <cstdint>
 
 // Global plugin host pointer
 TFruityPlugHost *PlugHost = nullptr;
@@ -94,7 +95,7 @@ int HelloWorldPlugin::Dispatcher(int ID, int Index, int Value)
             else
             {
                 // Show editor
-                ShowEditor((HWND)Index);
+                ShowEditor(reinterpret_cast<HWND>(static_cast<intptr_t>(Index)));
             }
             return 0;
             
@@ -120,10 +121,10 @@ void HelloWorldPlugin::ShowEditor(HWND ParentWindow)
     if (ParentWindow != nullptr)
     {
         // Get the native window handle and attach JUCE component
-        EditorHandle = CreateWindowEx(
+        EditorHandle = CreateWindowExA(
             0,
-            L"STATIC",
-            L"HelloWorld",
+            "STATIC",
+            "HelloWorld",
             WS_CHILD | WS_VISIBLE,
             0, 0,
             m_editor->getWidth(),
