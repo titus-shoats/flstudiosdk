@@ -1,0 +1,48 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Compiled files
+*.dll
+*.so
+*.dylib
+*.exe
+*.o
+*.obj
+*.lib
+*.a
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# JUCE
+JuceLibraryCode/
+Builds/
+
+# Temporary files
+*.log
+*.tmp
+*~
+.DS_Store
+Thumbs.db
+
+# Dependencies
+_deps/

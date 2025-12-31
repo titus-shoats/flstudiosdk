@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL Studio Hello World Plugin - Preview</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a9eff;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+        
+        .plugin-window {
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            background: linear-gradient(to bottom, #87ceeb, #00008b);
+            border: 2px solid #555;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .plugin-title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .hello-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #d3d3d3;
+            margin-top: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .info-section {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .info-section h2 {
+            color: #4a9eff;
+            margin-top: 0;
+        }
+        
+        .info-section ul {
+            line-height: 1.8;
+        }
+        
+        .code-block {
+            background-color: #0d0d0d;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .code-block code {
+            color: #4ec9b0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature-item {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #4a9eff;
+        }
+        
+        .feature-item h3 {
+            margin-top: 0;
+            color: #4a9eff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 FL Studio Hello World Plugin 🎵</h1>
+        <p class="description">
+            A native FL Studio plugin with JUCE-powered GUI
+        </p>
+        
+        <div class="plugin-window">
+            <div class="plugin-title">HelloWorld</div>
+            <div class="hello-text">Hello World</div>
+            <div class="subtitle">FL Studio Native Plugin with JUCE GUI</div>
+        </div>
+        
+        <div class="info-section">
+            <h2>📋 What This Demonstrates</h2>
+            <p>This plugin shows how to create a native FL Studio plugin that uses JUCE for the graphical user interface.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>🔌 FL Studio SDK</h3>
+                    <p>Native plugin interface using TFruityPlug base class</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎨 JUCE Framework</h3>
+                    <p>Modern C++ GUI framework for cross-platform interfaces</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🖼️ Custom Graphics</h3>
+                    <p>Gradient background and centered text rendering</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔧 Clean Integration</h3>
+                    <p>Seamless embedding in FL Studio's window system</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>🚀 Key Features</h2>
+            <ul>
+                <li><strong>Native FL Studio Plugin:</strong> Uses FL Studio SDK, not VST/AU</li>
+                <li><strong>JUCE GUI:</strong> Beautiful gradient background with custom text rendering</li>
+                <li><strong>Minimal Example:</strong> Clean, educational code structure</li>
+                <li><strong>CMake Build:</strong> Modern build system with automatic JUCE download</li>
+                <li><strong>Well Documented:</strong> Comprehensive README and architecture docs</li>
+            </ul>
+        </div>
+        
+        <div class="info-section">
+            <h2>📦 Files Structure</h2>
+            <div class="code-block">
+                <code>
+examples/HelloWorldPlugin/<br>
+├── CMakeLists.txt              # Build configuration<br>
+├── README.md                   # Build & usage instructions<br>
+├── ARCHITECTURE.md             # Technical architecture<br>
+└── src/<br>
+    ├── HelloWorldPlugin.h      # FL Studio plugin interface<br>
+    ├── HelloWorldPlugin.cpp    # Plugin implementation<br>
+    ├── HelloWorldEditor.h      # JUCE GUI component<br>
+    └── HelloWorldEditor.cpp    # GUI rendering code<br>
+                </code>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>🔨 Build Instructions</h2>
+            <div class="code-block">
+                <code>
+cd examples/HelloWorldPlugin<br>
+mkdir build && cd build<br>
+cmake .. -G "Visual Studio 16 2019" -A x64<br>
+cmake --build . --config Release<br>
+                </code>
+            </div>
+            <p style="margin-top: 15px;">
+                The built DLL should be placed in:<br>
+                <code style="color: #4ec9b0;">&lt;FL Studio&gt;/Plugins/Fruity/Generators/HelloWorld/HelloWorld.dll</code>
+            </p>
+        </div>
+        
+        <div class="info-section">
+            <h2>🎓 What You'll Learn</h2>
+            <ul>
+                <li>How to create a native FL Studio plugin from scratch</li>
+                <li>How to integrate JUCE framework for GUI rendering</li>
+                <li>How to implement the TFruityPlug interface</li>
+                <li>How to handle FL Studio's Dispatcher messages</li>
+                <li>How to embed JUCE components in FL Studio windows</li>
+                <li>How to properly export the CreatePlugInstance function</li>
+            </ul>
+        </div>
+        
+        <div class="info-section">
+            <h2>🔧 Technologies Used</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>C++17</h3>
+                    <p>Modern C++ features</p>
+                </div>
+                <div class="feature-item">
+                    <h3>FL Studio SDK</h3>
+                    <p>Native plugin API</p>
+                </div>
+                <div class="feature-item">
+                    <h3>JUCE 7.0.9</h3>
+                    <p>GUI framework</p>
+                </div>
+                <div class="feature-item">
+                    <h3>CMake</h3>
+                    <p>Build system</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>📚 Next Steps</h2>
+            <p>This example provides a foundation. To create a real plugin, you would add:</p>
+            <ul>
+                <li><strong>Audio Processing:</strong> Implement Voice_Render() or Render() methods</li>
+                <li><strong>Parameters:</strong> Add knobs, sliders, and parameter automation</li>
+                <li><strong>MIDI Input:</strong> Handle MIDI notes and CC messages</li>
+                <li><strong>State Management:</strong> Save and load presets</li>
+                <li><strong>Advanced GUI:</strong> Add interactive controls, visualizers, etc.</li>
+            </ul>
+        </div>
+        
+        <div class="info-section" style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+            <h2>🎉 Ready to Start?</h2>
+            <p>Check out the README.md for detailed build instructions!</p>
+            <p style="color: #4a9eff; font-size: 18px; margin-top: 20px;">
+                Happy Plugin Development! 🚀
+            </p>
+        </div>
+    </div>
+</body>
+</html>
