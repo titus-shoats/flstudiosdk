@@ -2,6 +2,8 @@
 
 This directory contains the core FL Studio plugin SDK source files for Delphi development.
 
+⚠️ **Compilation Status**: These files require additional dependency units (FP_Def.pas, FP_Extra.pas, GenericTransport.pas) to compile successfully. See "Required Dependencies" section below.
+
 ## Core Files
 
 - **FP_DelphiPlug.pas** - Delphi helper class with utility functions
@@ -9,9 +11,13 @@ This directory contains the core FL Studio plugin SDK source files for Delphi de
 
 ## Required Dependencies
 
-These files depend on:
-- **FP_Def.pas** - Basic type definitions (may need to be added)
-- **GenericTransport.pas** - Transport control definitions (may need to be added)
+⚠️ **Note**: These files have dependencies that are not yet included in this repository. To compile these files, you will need:
+
+- **FP_Def.pas** - Basic type definitions (constants like `Max_Path`, `NoteMul`, `AbsPPN`, etc.)
+- **FP_Extra.pas** - Extra utility functions (like `MulDiv64`, `MaxOf`, `MinOf`, `Zeros`, `MulShift16`, etc.)
+- **GenericTransport.pas** - Transport control definitions
+
+These dependency files can be found in the same source repository or may be part of the official FL Studio SDK distribution.
 
 ## Usage
 
@@ -59,10 +65,12 @@ Set in `TFruityPlugInfo.SDKVersion := CurrentSDKVersion`
 
 ## Examples
 
-See the `/examples/` directory for complete working examples:
-- FruityGain (effect plugin)
-- Sine (simple generator)
-- Osc3 (polyphonic generator)
+The repository includes HTML documentation for example plugins (see repository root):
+- **FruityGain** - Effect plugin example (see `fruitygain_d.html` for Delphi version)
+- **Sine** - Simple generator example (see `sine_d.html` for Delphi version)
+- **Osc3** - Polyphonic generator example (see `osc3_d.html` for Delphi version)
+
+These HTML files contain documentation and code snippets for reference implementations.
 
 ## License
 
