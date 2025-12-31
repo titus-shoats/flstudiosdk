@@ -5,6 +5,9 @@
 // Global plugin host pointer
 TFruityPlugHost *PlugHost = nullptr;
 
+// Shared JUCE initialization counter for reference counting
+static int g_juceRefCount = 0;
+
 // Plugin info (static)
 TFruityPlugInfo HelloWorldPlugin::s_PluginInfo = {
     CurrentSDKVersion,              // SDKVersion
@@ -33,14 +36,24 @@ HelloWorldPlugin::HelloWorldPlugin(int Tag)
     // Set plugin info pointer
     Info = &s_PluginInfo;
     
-    // Initialize JUCE
-    juce::initialiseJuce_GUI();
+    // Initialize JUCE with reference counting (thread-safe)
+    if (g_juceRefCount == 0)
+    {
+        juce::initialiseJuce_GUI();
+    }
+    g_juceRefCount++;
 }
 
 HelloWorldPlugin::~HelloWorldPlugin()
 {
     HideEditor();
-    juce::shutdownJuce_GUI();
+    
+    // Shutdown JUCE with reference counting
+    g_juceRefCount--;
+    if (g_juceRefCount == 0)
+    {
+        juce::shutdownJuce_GUI();
+    }
 }
 
 void HelloWorldPlugin::DestroyObject()
@@ -52,7 +65,11 @@ void HelloWorldPlugin::DestroyObject()
 void HelloWorldPlugin::Idle()
 {
     // Called periodically when idle
-    // Can be used for UI updates
+    // Process JUCE message queue to keep the GUI responsive
+    if (m_editor)
+    {
+        juce::MessageManager::getInstance()->runDispatchLoopUntil(1);
+    }
 }
 
 void HelloWorldPlugin::SaveRestoreState(IStream *Stream, BOOL Save)
@@ -120,28 +137,13 @@ void HelloWorldPlugin::ShowEditor(HWND ParentWindow)
     // We'll embed this in the FL Studio window
     if (ParentWindow != nullptr)
     {
-        // Get the native window handle and attach JUCE component
-        EditorHandle = CreateWindowExA(
-            0,
-            "STATIC",
-            "HelloWorld",
-            WS_CHILD | WS_VISIBLE,
-            0, 0,
-            m_editor->getWidth(),
-            m_editor->getHeight(),
-            ParentWindow,
-            nullptr,
-            GetModuleHandle(nullptr),
-            nullptr
-        );
+        // For FL Studio integration, add the JUCE component to the parent window
+        // Use addToDesktop with the parent window as the native handle
+        m_editor->addToDesktop(0, ParentWindow);
+        m_editor->setVisible(true);
         
-        if (EditorHandle != nullptr)
-        {
-            // Attach the JUCE component to the window
-            m_editor->setTopLeftPosition(0, 0);
-            m_editor->addToDesktop(0, EditorHandle);
-            m_editor->setVisible(true);
-        }
+        // Get the JUCE window handle
+        EditorHandle = (HWND)m_editor->getWindowHandle();
     }
     else
     {
@@ -164,6 +166,7 @@ void HelloWorldPlugin::HideEditor()
 {
     if (m_editor)
     {
+        m_editor->setVisible(false);
         m_editor->removeFromDesktop();
         m_editor.reset();
     }
@@ -174,11 +177,7 @@ void HelloWorldPlugin::HideEditor()
         m_editorWindow.reset();
     }
     
-    if (EditorHandle != nullptr)
-    {
-        DestroyWindow(EditorHandle);
-        EditorHandle = nullptr;
-    }
+    EditorHandle = nullptr;
 }
 
 // DLL Export: CreatePlugInstance
