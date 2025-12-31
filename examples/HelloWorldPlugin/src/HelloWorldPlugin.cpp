@@ -67,8 +67,9 @@ void HelloWorldPlugin::Idle()
     // Process pending JUCE messages if the editor is open
     if (m_editor && juce::MessageManager::getInstanceWithoutCreating())
     {
-        // Process messages without blocking - just dispatch what's available
-        juce::MessageManager::getInstance()->runDispatchLoopUntil(0);
+        // Use dispatchPendingMessages() - the modern replacement for runDispatchLoopUntil(0)
+        // This processes any pending messages and returns immediately without blocking
+        juce::MessageManager::getInstance()->dispatchPendingMessages();
     }
 }
 
