@@ -7,6 +7,7 @@ TFruityPlugHost *PlugHost = nullptr;
 
 // Shared JUCE initialization counter for reference counting
 static int g_juceRefCount = 0;
+static bool g_juceInitialized = false;
 
 // Plugin info (static)
 TFruityPlugInfo HelloWorldPlugin::s_PluginInfo = {
@@ -36,11 +37,8 @@ HelloWorldPlugin::HelloWorldPlugin(int Tag)
     // Set plugin info pointer
     Info = &s_PluginInfo;
     
-    // Initialize JUCE with reference counting (thread-safe)
-    if (g_juceRefCount == 0)
-    {
-        juce::initialiseJuce_GUI();
-    }
+    // Don't initialize JUCE here - wait until editor is shown
+    // This avoids issues with message thread management during plugin load
     g_juceRefCount++;
 }
 
@@ -50,8 +48,9 @@ HelloWorldPlugin::~HelloWorldPlugin()
     
     // Shutdown JUCE with reference counting
     g_juceRefCount--;
-    if (g_juceRefCount == 0)
+    if (g_juceRefCount == 0 && g_juceInitialized)
     {
+        g_juceInitialized = false;
         juce::shutdownJuce_GUI();
     }
 }
@@ -65,10 +64,11 @@ void HelloWorldPlugin::DestroyObject()
 void HelloWorldPlugin::Idle()
 {
     // Called periodically when idle
-    // Process JUCE message queue to keep the GUI responsive
-    if (m_editor)
+    // Process pending JUCE messages if the editor is open
+    if (m_editor && juce::MessageManager::getInstanceWithoutCreating())
     {
-        juce::MessageManager::getInstance()->runDispatchLoopUntil(1);
+        // Process messages without blocking - just dispatch what's available
+        juce::MessageManager::getInstance()->runDispatchLoopUntil(0);
     }
 }
 
@@ -129,6 +129,21 @@ void HelloWorldPlugin::ShowEditor(HWND ParentWindow)
 {
     if (m_editor != nullptr)
         return; // Already showing
+    
+    // Initialize JUCE on first editor show (lazy initialization)
+    if (!g_juceInitialized)
+    {
+        juce::initialiseJuce_GUI();
+        
+        // Set the current thread as the message thread for JUCE
+        // This tells JUCE to use FL Studio's thread for message processing
+        if (juce::MessageManager::getInstanceWithoutCreating())
+        {
+            juce::MessageManager::getInstance()->setCurrentThreadAsMessageThread();
+        }
+        
+        g_juceInitialized = true;
+    }
         
     // Create the JUCE editor component
     m_editor = std::make_unique<HelloWorldEditor>();
