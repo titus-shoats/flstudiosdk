@@ -1,0 +1,48 @@
+# Delphi build artifacts
+*.dcu
+*.exe
+*.dll
+*.bpl
+*.bpi
+*.dcp
+*.so
+*.apk
+*.drc
+*.map
+*.dres
+*.rsm
+*.tds
+*.doz
+*.tmp
+*.log
+*.stat
+*.mps
+*.mpt
+
+# Delphi local files
+*.local
+*.identcache
+*.projdata
+*.tvsconfig
+*.dsk
+
+# Backup files
+*.~*
+__history/
+__recovery/
+
+# Win32/Win64 directories
+Win32/
+Win64/
+
+# Project build directories
+Debug/
+Release/
+lib/
+
+# IDE files (optional - uncomment if you don't want to share IDE settings)
+# *.dproj.local
+# *.groupproj.local
+
+# Compiled DLL (comment out if you want to include the compiled plugin)
+# *.dll
