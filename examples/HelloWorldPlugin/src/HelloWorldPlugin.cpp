@@ -64,13 +64,9 @@ void HelloWorldPlugin::DestroyObject()
 void HelloWorldPlugin::Idle()
 {
     // Called periodically when idle
-    // Process pending JUCE messages if the editor is open
-    if (m_editor && juce::MessageManager::getInstanceWithoutCreating())
-    {
-        // Use dispatchPendingMessages() - the modern replacement for runDispatchLoopUntil(0)
-        // This processes any pending messages and returns immediately without blocking
-        juce::MessageManager::getInstance()->dispatchPendingMessages();
-    }
+    // JUCE handles its own message processing through timer callbacks
+    // once we've called setCurrentThreadAsMessageThread() in ShowEditor()
+    // No manual message dispatching needed in plugin environment
 }
 
 void HelloWorldPlugin::SaveRestoreState(IStream *Stream, BOOL Save)
